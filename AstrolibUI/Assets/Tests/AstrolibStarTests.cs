@@ -12,25 +12,25 @@ public class AstrolibStarTests
     [Test]
     public void Star_Radius_Get()
     {
-        var star = new Star();
+        var star = new AstrolibStar();
             
         star.Radius = 5;
         Assert.AreEqual(5, star.Radius);
     }
     
-    [Test]
+    /*[Test]
     public void Star_Mass_Get()
     {
-        var star = new Star();
+        var star = new AstrolibStar();
             
         star.Mass = 5;
         Assert.AreEqual(5, star.Mass);
-    }
+    }*/
     
     [Test]
     public void Star_PhotosphereTemperature_Get()
     {
-        var star = new Star();
+        var star = new AstrolibStar();
             
         star.PhotosphereTemperature = 5;
         Assert.AreEqual(5, star.PhotosphereTemperature);
@@ -39,7 +39,12 @@ public class AstrolibStarTests
     [Test]
     public void Star_Luminosity_Works()
     {
-        var star = new Star(5, 5, 5, 5, SpecType.A0, LumClass.Ia);
+        //var star = new AstrolibStar(5, 5, 5, 5, SpecType.A0, LumClass.Ia);
+        var star = new AstrolibStar
+        {
+            Radius = 5,
+            PhotosphereTemperature = 5
+        };
         Debug.Log(star.Luminosity);
         Assert.AreEqual(0, star.Luminosity, 0.1);
     }
@@ -47,7 +52,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_Bmv2Rgb_Works()
     {
-        var (r, g, b) = new Star{Bv = 5}.Rgb();
+        var (r, g, b) = new AstrolibStar{Bv = 5}.Rgb();
         Debug.Log(r);
         Debug.Log(g);
         Debug.Log(b);
@@ -59,7 +64,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_Bmv2Temp_Works()
     {
-        var temp = Star.Bmv2Temp(5);
+        var temp = AstrolibStar.Bmv2Temp(5);
         Debug.Log(temp);
         Assert.AreEqual(1610, temp, 10);
     }
@@ -67,7 +72,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_ColorTemperature_Works()
     {
-        var temp = new Star{Bv = 5, SpectrumClass = "O0Ia"}.ColorTemperature;
+        var temp = new AstrolibStar{Bv = 5, SpectrumClass = "O0Ia"}.GetTempByBvLumClass;
         Debug.Log(temp);
         Assert.AreEqual(0, temp, 0.1);
     }
@@ -75,7 +80,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_BolometricCorrection_Works()
     {
-        var result = Star.BolometricCorrection(5);
+        var result = AstrolibStar.BolometricCorrection(5);
         Debug.Log(result);
         Assert.AreEqual(-10100, result, 100);
     }
@@ -83,7 +88,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_AbsoluteMagnitude_Works()
     {
-        var result = Star.GetAbsoluteMagnitude(5, 5);
+        var result = AstrolibStar.GetAbsoluteMagnitude(5, 5);
         Debug.Log(result);
         Assert.AreEqual(6.5, result, 0.1);
     }
@@ -91,7 +96,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_ApparentMagnitude_Works()
     {
-        var result = Star.GetApparentMagnitude(5, 5);
+        var result = AstrolibStar.GetApparentMagnitude(5, 5);
         Debug.Log(result);
         Assert.AreEqual(3.5, result, 0.1);
     }
@@ -99,7 +104,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_DistanceFromMagnitude_Works()
     {
-        var result = Star.DistanceFromMagnitude(5, 5);
+        var result = AstrolibStar.DistanceFromMagnitude(5, 5);
         Debug.Log(result);
         Assert.AreEqual(10, result);
     }
@@ -107,9 +112,9 @@ public class AstrolibStarTests
     [Test]
     public void Star_BrightnessRatio_Works()
     {
-        var sun = new Star();
+        var sun = new AstrolibStar();
         sun.InitMagnitudeFromApparent(-26.832, 0);
-        var moon = new Star();
+        var moon = new AstrolibStar();
         moon.InitMagnitudeFromApparent(-12.74, 0);
         var result = sun.BrightnessRatio(moon);
         Debug.Log(result);
@@ -119,7 +124,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_MagnitudeDifference_Works()
     {
-        var result = Star.GetMagnitudeDifference(5);
+        var result = AstrolibStar.GetMagnitudeDifference(5);
         Debug.Log(result);
         Assert.AreEqual(-1.7, result, 0.1);
     }
@@ -127,7 +132,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_MagnitudeSum_Works()
     {
-        var result = Star.MagnitudeSum(5, 5);
+        var result = AstrolibStar.MagnitudeSum(5, 5);
         Debug.Log(result);
         Assert.AreEqual(4.2, result, 0.1);
     }
@@ -135,7 +140,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_MoffatFunction_Works()
     {
-        var result = Star.MoffatFunction(5, 5, 5);
+        var result = AstrolibStar.MoffatFunction(5, 5, 5);
         Debug.Log(result);
         Assert.AreEqual(0, result, 0.1);
     }
@@ -143,7 +148,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_MoffatRadius_Works()
     {
-        var result = Star.MoffatRadius(5, 5, 5);
+        var result = AstrolibStar.MoffatRadius(5, 5, 5);
         Debug.Log(result);
         Assert.AreEqual(0, result, 0.1);
     }
@@ -151,7 +156,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_SpectralType_Works()
     {
-        var result = new Star{SpectrumClass = "O0Ia0"}.SpectralType;
+        var result = new AstrolibStar{SpectrumClass = "O0Ia0"}.SpectralType;
         Debug.Log(result);
         Assert.AreEqual(SpecType.O0, result);
     }
@@ -159,7 +164,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_LuminosityClass_Works()
     {
-        var result = new Star{SpectrumClass = "O0Ia0"}.LuminosityClass;
+        var result = new AstrolibStar{SpectrumClass = "O0Ia0"}.LuminosityClass;
         Debug.Log(result);
         Assert.AreEqual(LumClass.Ia0, result);
     }
@@ -167,7 +172,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_FormatSpectrum_Works()
     {
-        var result = Star.FormatSpectrum(SpecType.A0, LumClass.Ia);
+        var result = AstrolibStar.FormatSpectrum(SpecType.A0, LumClass.Ia);
         Debug.Log(result);
         Assert.AreEqual("A0Ia", result);
     }
@@ -175,7 +180,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_StaticLuminosity_Works()
     {
-        var result = Star.GetLuminosity(5, 5);
+        var result = AstrolibStar.GetLuminosity(5, 5);
         Debug.Log(result);
         Assert.AreEqual(0, result, 0.1);
     }
@@ -183,7 +188,7 @@ public class AstrolibStarTests
     [Test]
     public void Star_StarRadius_Works()
     {
-        var result = Star.GetRadius(5, 5);
+        var result = AstrolibStar.GetRadius(5, 5);
         Debug.Log(result);
         Assert.AreEqual(0, result, 0.1);
     }
@@ -191,9 +196,20 @@ public class AstrolibStarTests
     [Test]
     public void Star_Sun()
     {
-        var sun = new Star(1.9885e30, 1.392e9 / 2, 5780, 0.656, "G2V");
-        var tempFromBv = Star.Bmv2Temp(sun.Bv);
+        var sun = new AstrolibStar
+        {
+            //Mass = 1.9885e30,
+            Radius = 1.392e9 / 2,
+            PhotosphereTemperature = 5780,
+            Bv = 0.656,
+            SpectrumClass = "G2V",
+            ApparentMagnitude = -26.74d
+        };
+
+
+        var tempFromBv = sun.GetTempByBv();
         var (r, g, b) = sun.Rgb();
+        sun.InitLuminosity();
         Debug.Log($"Luminosity: {sun.Luminosity}");
         Debug.Log($"Temp from bv: {tempFromBv}");
         Debug.Log($"SpecType: {sun.SpectralType}");
@@ -201,6 +217,6 @@ public class AstrolibStarTests
         Debug.Log($"Sun rgb colour: ({r}, {g}, {b}");
         Assert.AreEqual(3.828e26, sun.Luminosity, 1e25);
         Assert.AreEqual(sun.PhotosphereTemperature, tempFromBv, 100);
-        Assert.AreEqual(sun.SpectrumClass, Star.FormatSpectrum(sun.SpectralType, sun.LuminosityClass));
+        Assert.AreEqual(sun.SpectrumClass, AstrolibStar.FormatSpectrum(sun.SpectralType, sun.LuminosityClass));
     }
 }

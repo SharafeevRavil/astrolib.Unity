@@ -75,6 +75,12 @@ namespace Astrolib
         public static extern bool Star_parseSpectrum(string spectrum, out int spectype, out int lumclass);
         [DllImport(DLLName)]
         public static extern void Star_formatSpectrum(StringBuilder str, int strlen, int spectype, int lumclass);
+        /// <summary>
+        /// Calculate star 
+        /// </summary>
+        /// <param name="mv">visual (apparent) magnitude</param>
+        /// <param name="bc">bolometric correctrion (extract from Star_bolometricCorrection)</param>
+        /// <returns></returns>
         [DllImport(DLLName)]
         public static extern double Star_luminosity(double mv, double bc);
         [DllImport(DLLName)]
