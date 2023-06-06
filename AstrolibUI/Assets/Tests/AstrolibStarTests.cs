@@ -188,35 +188,36 @@ public class AstrolibStarTests
     [Test]
     public void Star_StarRadius_Works()
     {
-        var result = AstrolibStar.GetRadius(5, 5);
+        var result = AstrolibStar.GetRadius(126000, 3600);
         Debug.Log(result);
-        Assert.AreEqual(0, result, 0.1);
+        Assert.AreEqual(900, result, 300);
     }
 
     [Test]
-    public void Star_Sun()
+    public void Star_Betelgeuse()
     {
-        var sun = new AstrolibStar
-        {
+        var betelgeuse = new AstrolibStar(1.85, 1, "M1Ia", 168.1);
+        /*{
             //Mass = 1.9885e30,
-            Radius = 1.392e9 / 2,
-            PhotosphereTemperature = 5780,
-            Bv = 0.656,
+            Radius = 764,
+            PhotosphereTemperature = 3600,
+            Bv = 1.85,
             SpectrumClass = "G2V",
-            ApparentMagnitude = -26.74d
-        };
+            ApparentMagnitude = -5.85
+        };*/
 
 
-        var tempFromBv = sun.GetTempByBv();
-        var (r, g, b) = sun.Rgb();
-        sun.InitLuminosity();
-        Debug.Log($"Luminosity: {sun.Luminosity}");
-        Debug.Log($"Temp from bv: {tempFromBv}");
-        Debug.Log($"SpecType: {sun.SpectralType}");
-        Debug.Log($"LumClass: {sun.LuminosityClass}");
+        var (r, g, b) = betelgeuse.Rgb();
+        Debug.Log($"Radius: {betelgeuse.Radius}");
+        Debug.Log($"Absolute magnitude: {betelgeuse.AbsoluteMagnitude}");
+        Debug.Log($"Luminosity: {betelgeuse.Luminosity}");
+        Debug.Log($"Temp: {betelgeuse.PhotosphereTemperature}");
+        Debug.Log($"SpecType: {betelgeuse.SpectralType}");
+        Debug.Log($"LumClass: {betelgeuse.LuminosityClass}");
         Debug.Log($"Sun rgb colour: ({r}, {g}, {b}");
-        Assert.AreEqual(3.828e26, sun.Luminosity, 1e25);
-        Assert.AreEqual(sun.PhotosphereTemperature, tempFromBv, 100);
-        Assert.AreEqual(sun.SpectrumClass, AstrolibStar.FormatSpectrum(sun.SpectralType, sun.LuminosityClass));
+        Assert.AreEqual(130000, betelgeuse.Luminosity, 50000);
+        Assert.AreEqual(3600, betelgeuse.PhotosphereTemperature, 300);
+        Assert.AreEqual(900, betelgeuse.Radius, 300);
+        Assert.AreEqual(betelgeuse.SpectrumClass, AstrolibStar.FormatSpectrum(betelgeuse.SpectralType, betelgeuse.LuminosityClass));
     }
 }

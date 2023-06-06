@@ -37,17 +37,11 @@ namespace Astrolib
             DistanceFromEarth = distInParsecs;
             Bv = bv;
             SpectrumClass = spectrumClass;
-            
-            InitMagnitudeFromApparent(ApparentMagnitude, DistanceFromEarth);
             PhotosphereTemperature = GetTempByBv(); //no temperature in dataset - calculate it from bv
-            InitLuminosity();
-            Radius = GetRadius(Luminosity, PhotosphereTemperature);
-        }
 
-        public void InitLuminosity()
-        {
-            var bc = BolometricCorrection(PhotosphereTemperature);
-            Luminosity = GetLuminosity(ApparentMagnitude, bc);
+            InitMagnitudeFromApparent(apparentMagnitude, distInParsecs);
+            Luminosity = GetLuminosity(AbsoluteMagnitude, BolometricCorrection(PhotosphereTemperature));
+            Radius = GetRadius(Luminosity, PhotosphereTemperature);
         }
 
         public SpecType SpectralType => (SpecType)AstrolibNative.Star_spectralType(SpectrumClass); // считаем из общей
@@ -144,7 +138,7 @@ namespace Astrolib
             AstrolibNative.Star_luminosity(mv, bc);
         // used in UI
         public static double GetRadius(double lum, double temp) =>
-            AstrolibNative.Star_luminosity(lum, temp);
+            AstrolibNative.Star_radius(lum, temp);
         #endregion
     }
 }
