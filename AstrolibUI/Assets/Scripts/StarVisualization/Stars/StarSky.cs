@@ -23,7 +23,7 @@ namespace StarVisualization.Stars
         private void Start()
         {
             Stars = starReader.ReadStarData()
-                .Select(compilation => new Star(compilation, compilation.Distance))
+                .Select(compilation => new Star(compilation))
                 .ToList();
             
             _starObjects = Stars

@@ -1,6 +1,7 @@
 ﻿using System;
 using Astrolib;
 using Dataset;
+using PlasticGui;
 using UnityEngine;
 
 namespace StarVisualization.Stars
@@ -12,11 +13,11 @@ namespace StarVisualization.Stars
 
         public Vector3 Position { get; set; }
         public float Size { get; set; }
-
-        public Star(StarDataCompilation dataCompilation, double dist)
+        
+        public Star(StarDataCompilation dataCompilation)
         {
             DataCompilation = dataCompilation;
-            AstrolibStar = new AstrolibStar(DataCompilation.Bsc5Star.Bv, dataCompilation.Bsc5Star.VMag, dataCompilation.Bsc5Star.SpecType, dist);
+            AstrolibStar = new AstrolibStar(DataCompilation.Bsc5Star.Bv, dataCompilation.Bsc5Star.VMag, dataCompilation.Bsc5Star.SpecType, dataCompilation.Distance);
 
             CalculatePosition();
             CalculateSize();
