@@ -29,16 +29,4 @@ namespace Dataset
                 .ToList();
         }
     }
-
-    public class StarDataCompilation
-    {
-        public Bsc5StarDto Star { get; }
-        public double Distance { get; }
-
-        public StarDataCompilation(Bsc5StarDto star, double distance)
-        {
-            Star = star;
-            Distance = distance;
-        }
-    }
 }

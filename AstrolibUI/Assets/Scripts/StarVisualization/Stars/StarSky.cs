@@ -3,7 +3,7 @@ using System.Linq;
 using Dataset;
 using UnityEngine;
 
-namespace StarVisualization
+namespace StarVisualization.Stars
 {
     public class StarSky : MonoBehaviour
     {
@@ -23,7 +23,7 @@ namespace StarVisualization
         private void Start()
         {
             Stars = starReader.ReadStarData()
-                .Select(compilation => new Star(compilation.Star, compilation.Distance))
+                .Select(compilation => new Star(compilation, compilation.Distance))
                 .ToList();
             
             _starObjects = Stars
@@ -32,10 +32,14 @@ namespace StarVisualization
                     var starGo = GameObject.CreatePrimitive(PrimitiveType.Quad);
                     var thisTransform = transform;
                     starGo.transform.parent = thisTransform;
-                    starGo.name = $"HR {star.Bsc5Star.HrNumber}";
+                    starGo.name = $"HR {star.DataCompilation.Bsc5Star.HrNumber}";
                     starGo.transform.localPosition = star.Position * StarFieldScale;
                     starGo.transform.LookAt(thisTransform.position);
                     starGo.transform.Rotate(0, 180, 0);
+
+                    var dataHolder = starGo.AddComponent<StarDataHolder>();
+                    dataHolder.Star = star;
+                    
                     var material = starGo.GetComponent<MeshRenderer>().material;
                     material.shader = Shader.Find("Unlit/StarShader");
                     material.SetFloat(Size, Mathf.Lerp(starSizeMin, starSizeMax, star.Size));
