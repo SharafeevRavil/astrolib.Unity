@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace Astrolib
@@ -37,6 +37,7 @@ namespace Astrolib
             DistanceFromEarth = distInParsecs;
             Bv = bv;
             SpectrumClass = spectrumClass;
+            
             PhotosphereTemperature = GetTempByBv(); //no temperature in dataset - calculate it from bv
 
             InitMagnitudeFromApparent(apparentMagnitude, distInParsecs);
