@@ -32,7 +32,10 @@ namespace StarVisualization
         
 
         [SerializeField] private Button closeButton;
+        [SerializeField] private Button setLeftStarComparisonButton;
+        [SerializeField] private Button setRightStarComparisonButton;
 
+        private Star _star;
         private Action _removeAction;
 
         public void Initialize(Star starData, Action removeAction)
@@ -73,16 +76,30 @@ namespace StarVisualization
             rgbText.color = calcDataColor;
             var color = starData.AstrolibStar.Rgb();
             rgbImage.color = new Color((float)color.r, (float)color.g, (float)color.b); 
-            
+            _star = starData;
 
             _removeAction = removeAction;
             closeButton.onClick.AddListener(Close);
+            setLeftStarComparisonButton.onClick.AddListener(SetAsLeftStarInComparison);
+            setRightStarComparisonButton.onClick.AddListener(SetAsRightStarInComparison);
         }
 
         public void Close()
         {
             _removeAction?.Invoke();
             Destroy(gameObject);
+        }
+
+        public void SetAsLeftStarInComparison()
+        {
+            var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
+            comparer.SetLeftStar(_star);
+        }
+        
+        public void SetAsRightStarInComparison()
+        {
+            var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
+            comparer.SetRightStar(_star);
         }
     }
 }
