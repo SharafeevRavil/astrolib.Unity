@@ -1,12 +1,11 @@
 ﻿using System;
 using Helpers;
 using StarVisualization.Stars;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using UnityEngine.Serialization;
 
-namespace StarVisualization
+namespace StarVisualization.UiFeatures.StarInfo
 {
     public class StarInfo : MonoBehaviour
     {
@@ -74,27 +73,25 @@ namespace StarVisualization
             _star = starData;
 
             _removeAction = removeAction;
+            
             closeButton.onClick.AddListener(Close);
-            setLeftStarComparisonButton.onClick.AddListener(SetAsLeftStarInComparison);
-            setRightStarComparisonButton.onClick.AddListener(SetAsRightStarInComparison);
+            
+            setLeftStarComparisonButton.onClick.AddListener(() =>
+            {
+                var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
+                comparer.StarLeft = _star;
+            });
+            setRightStarComparisonButton.onClick.AddListener(() =>
+            {
+                var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
+                comparer.StarRight = _star;
+            });
         }
 
         public void Close()
         {
             _removeAction?.Invoke();
             Destroy(gameObject);
-        }
-
-        public void SetAsLeftStarInComparison()
-        {
-            var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
-            comparer.SetLeftStar(_star);
-        }
-        
-        public void SetAsRightStarInComparison()
-        {
-            var comparer = GameObject.Find("Comparison").GetComponent<StarComparison>();
-            comparer.SetRightStar(_star);
         }
     }
 }

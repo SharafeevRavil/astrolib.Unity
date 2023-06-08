@@ -1,7 +1,7 @@
 ﻿using Helpers;
 using UnityEngine;
 
-namespace StarVisualization
+namespace StarVisualization.Controllers
 {
     public class CameraController : MonoBehaviour
     {

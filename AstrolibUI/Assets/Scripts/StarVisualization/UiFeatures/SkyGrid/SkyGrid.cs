@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StarVisualization
+namespace StarVisualization.UiFeatures.SkyGrid
 {
     public class SkyGrid : MonoBehaviour
     {

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StarVisualization.Controllers;
 using StarVisualization.Stars;
+using StarVisualization.UiFeatures.StarInfo;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace StarVisualization
+namespace StarVisualization.UiFeatures
 {
     public class SearchStars : MonoBehaviour
     {
@@ -23,7 +24,7 @@ namespace StarVisualization
         private string _lastSearch;
         private List<GameObject> _foundStars;
         private int _currentIndex;
-        private StarInfo _lastOpened;
+        private StarInfo.StarInfo _lastOpened;
 
         private void Start()
         {

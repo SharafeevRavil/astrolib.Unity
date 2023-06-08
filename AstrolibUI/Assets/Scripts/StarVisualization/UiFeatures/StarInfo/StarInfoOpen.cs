@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StarVisualization.Stars;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
-namespace StarVisualization
+namespace StarVisualization.UiFeatures.StarInfo
 {
     public class StarInfoOpen : MonoBehaviour
     {

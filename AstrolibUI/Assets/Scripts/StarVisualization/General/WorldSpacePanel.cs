@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace StarVisualization
+namespace StarVisualization.General
 {
     public class WorldSpacePanel : MonoBehaviour
     {

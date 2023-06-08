@@ -2,10 +2,11 @@
 using System.Linq;
 using Dataset;
 using Helpers;
+using StarVisualization.Stars;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StarVisualization.Stars
+namespace StarVisualization.UiFeatures
 {
     public class ConstellationVisualizer : MonoBehaviour
     {

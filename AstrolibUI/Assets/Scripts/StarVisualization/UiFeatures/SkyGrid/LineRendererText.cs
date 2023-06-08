@@ -1,7 +1,8 @@
-﻿using TMPro;
+﻿using StarVisualization.General;
+using TMPro;
 using UnityEngine;
 
-namespace StarVisualization
+namespace StarVisualization.UiFeatures.SkyGrid
 {
     public class LineRendererText : MonoBehaviour
     {
