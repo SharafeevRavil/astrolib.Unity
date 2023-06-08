@@ -27,8 +27,6 @@ namespace StarVisualization.Stars
         private double _lastToggledSec;
 
         private Image _buttonImage;
-        private readonly Color _disabledColor = new(105/255f, 105/255f, 105/255f);
-        private readonly Color _enabledColor = new(50/255f, 205/255f, 50/255f);
 
         private void Start()
         {
@@ -36,7 +34,7 @@ namespace StarVisualization.Stars
             
             button.onClick.AddListener(ToggleVisualization);
             _buttonImage = button.GetComponent<Image>();
-            _buttonImage.color = _disabledColor;
+            _buttonImage.color = ColorHelper.DisabledGray;
         }
 
         public void ToggleVisualization()
@@ -49,7 +47,7 @@ namespace StarVisualization.Stars
 
             _visible = !_visible;
             _constellationsObject.SetActive(_visible);
-            _buttonImage.color = _visible ? _enabledColor : _disabledColor;
+            _buttonImage.color = _visible ? ColorHelper.LimeGreen : ColorHelper.DisabledGray;
         }
         private void FixedUpdate()
         {

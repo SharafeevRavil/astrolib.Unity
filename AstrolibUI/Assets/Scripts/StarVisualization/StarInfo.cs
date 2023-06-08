@@ -40,38 +40,35 @@ namespace StarVisualization
 
         public void Initialize(Star starData, Action removeAction)
         {
-            var inputDataColor = new Color(255/255f, 126/255f, 50/255f); 
-            var calcDataColor = new Color(50/255f, 205/255f, 50/255f); 
-            
             hrText.text = $"Star: {starData.FullName}";
             
             distanceText.text = $"To Earth: {starData.DataCompilation.Distance} pc";
-            distanceText.color = inputDataColor;
+            distanceText.color = ColorHelper.OrangeCarrot;
             coordsText.text = $"RA = {CoordinateConverter.ConvertRa(starData.DataCompilation.Bsc5Star.Ra)}\n" +
                               $"Dec = {CoordinateConverter.ConvertDec(starData.DataCompilation.Bsc5Star.Dec)}";
             
             bvText.text = $"Bv = {starData.DataCompilation.Bsc5Star.Bv:F2}";
-            bvText.color = inputDataColor;
+            bvText.color = ColorHelper.OrangeCarrot;
             vMagText.text = $"vMag = {starData.DataCompilation.Bsc5Star.VMag:F2}";
-            vMagText.color = inputDataColor;
+            vMagText.color = ColorHelper.OrangeCarrot;
             absMagText.text = $"absMag = {starData.AstrolibStar.AbsoluteMagnitude:F2}";
-            absMagText.color = calcDataColor;
+            absMagText.color = ColorHelper.LimeGreen;
             
             specClassText.text = $"{starData.DataCompilation.Bsc5Star.SpecType}:";
-            specClassText.color = inputDataColor;
+            specClassText.color = ColorHelper.OrangeCarrot;
             specTypeText.text = $"{starData.AstrolibStar.SpectralType}";
-            specTypeText.color = calcDataColor;
+            specTypeText.color = ColorHelper.LimeGreen;
             lumClassText.text = $"{starData.AstrolibStar.LuminosityClass}";
-            lumClassText.color = calcDataColor;
+            lumClassText.color = ColorHelper.LimeGreen;
             
             temperatureText.text = $"T = {starData.AstrolibStar.PhotosphereTemperature:F2}";
-            temperatureText.color = calcDataColor;
+            temperatureText.color = ColorHelper.LimeGreen;
             luminosityText.text = $"L = {starData.AstrolibStar.Luminosity:F2} L⊙";
-            luminosityText.color = calcDataColor;
+            luminosityText.color = ColorHelper.LimeGreen;
             radiusText.text = $"R = {starData.AstrolibStar.Radius:F2} R⊙";
-            radiusText.color = calcDataColor;
+            radiusText.color = ColorHelper.LimeGreen;
 
-            rgbText.color = calcDataColor;
+            rgbText.color = ColorHelper.LimeGreen;
             var color = starData.AstrolibStar.Rgb();
             rgbImage.color = new Color((float)color.r, (float)color.g, (float)color.b); 
             _star = starData;

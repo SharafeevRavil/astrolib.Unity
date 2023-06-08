@@ -21,18 +21,23 @@ namespace StarVisualization.Stars
 
         private static readonly int Size = Shader.PropertyToID("_Size");
 
+        private GameObject _starsParentGo;
+        
         private void Start()
         {
             Stars = starReader.ReadStarData()
                 .Select(compilation => new Star(compilation))
                 .ToList();
+
+            _starsParentGo = new GameObject("Stars");
+            _starsParentGo.transform.parent = transform;
             
             StarObjects = Stars
                 .Select(star =>
                 {
                     var starGo = GameObject.CreatePrimitive(PrimitiveType.Quad);
                     var thisTransform = transform;
-                    starGo.transform.parent = thisTransform;
+                    starGo.transform.parent = _starsParentGo.transform;
                     starGo.name = $"HR {star.DataCompilation.Bsc5Star.HrNumber}";
                     starGo.transform.localPosition = star.Position * StarFieldScale;
                     starGo.transform.LookAt(thisTransform.position);
