@@ -2,6 +2,7 @@
 using System.Linq;
 using Dataset;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace StarVisualization.Stars
 {
@@ -16,7 +17,7 @@ namespace StarVisualization.Stars
         [SerializeField] private StarReader starReader;
 
         public List<Star> Stars { get; private set; }
-        private List<GameObject> _starObjects;
+        public IReadOnlyList<GameObject> StarObjects { get; private set; }
 
         private static readonly int Size = Shader.PropertyToID("_Size");
 
@@ -26,7 +27,7 @@ namespace StarVisualization.Stars
                 .Select(compilation => new Star(compilation))
                 .ToList();
             
-            _starObjects = Stars
+            StarObjects = Stars
                 .Select(star =>
                 {
                     var starGo = GameObject.CreatePrimitive(PrimitiveType.Quad);
@@ -52,11 +53,11 @@ namespace StarVisualization.Stars
 
         private void OnValidate()
         {
-            if (_starObjects == null) return;
-            for (var i = 0; i < _starObjects.Count; i++)
+            if (StarObjects == null) return;
+            for (var i = 0; i < StarObjects.Count; i++)
             {
                 // Update the size set in the shader.
-                var material = _starObjects[i].GetComponent<MeshRenderer>().material;
+                var material = StarObjects[i].GetComponent<MeshRenderer>().material;
                 material.SetFloat(Size, Mathf.Lerp(starSizeMin, starSizeMax, Stars[i].Size));
             }
         }

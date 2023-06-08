@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dataset;
+using Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ namespace StarVisualization.Stars
         [SerializeField] private Button button;
 
         [SerializeField] private StarSky starSky;
+        
+        [SerializeField] private InputFieldsHelper inputFieldsHelper;
         
         private List<ConstellationDto> _constellationData;
         
@@ -50,6 +53,7 @@ namespace StarVisualization.Stars
         }
         private void FixedUpdate()
         {
+            if (inputFieldsHelper.IsAnyFocused()) return;
             if (!Input.GetKey(KeyCode.Space)) return;
             
             var nowSec = Time.unscaledTime;

@@ -43,9 +43,7 @@ namespace StarVisualization
             var inputDataColor = new Color(255/255f, 126/255f, 50/255f); 
             var calcDataColor = new Color(50/255f, 205/255f, 50/255f); 
             
-            hrText.text = $"Star: HR {starData.DataCompilation.Bsc5Star.HrNumber}" +
-                          $"{(string.IsNullOrWhiteSpace(starData.DataCompilation.Bsc5Star.AltName) ? "" : $" ({starData.DataCompilation.Bsc5Star.AltName})")}" +
-                          $"{(string.IsNullOrWhiteSpace(starData.DataCompilation.Name) ? "" : $" - {starData.DataCompilation.Name}")}";
+            hrText.text = $"Star: {starData.FullName}";
             
             distanceText.text = $"To Earth: {starData.DataCompilation.Distance} pc";
             distanceText.color = inputDataColor;

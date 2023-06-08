@@ -55,11 +55,11 @@ namespace StarVisualization
             CreatePanel(hitObject, mousePosition);
         }
 
-        private void CreatePanel(GameObject hitObject, Vector3 mousePosition)
+        public StarInfo CreatePanel(GameObject hitObject, Vector3 mousePosition)
         {
             var starData = hitObject.GetComponent<StarDataHolder>().Star;
             var hrNumber = starData.DataCompilation.Bsc5Star.HrNumber;
-            if(_openedStars.Contains(hrNumber)) return;
+            if(_openedStars.Contains(hrNumber)) return null;
             _openedStars.Add(hrNumber);
             
             Debug.Log($"Opening info for {hitObject}");
@@ -70,6 +70,7 @@ namespace StarVisualization
 
             var starInfo = panel.GetComponent<StarInfo>();
             starInfo.Initialize(starData, () => _openedStars.Remove(hrNumber));
+            return starInfo;
         }
     }
 }
