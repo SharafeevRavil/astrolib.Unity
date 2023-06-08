@@ -62,6 +62,7 @@ namespace StarVisualization.UiFeatures.StarInfo
             
             Debug.Log($"Opening info for {hitObject}");
             var panel = Instantiate(panelPrefab, hitObject.transform.position, Quaternion.identity, transform);
+            panel.transform.parent = transform;
             var rectTransform = panel.GetComponent<RectTransform>();
             rectTransform.pivot = new Vector2(mousePosition.x >= Screen.width / 2d ? 1 : 0,
                 mousePosition.y >= Screen.height / 2d ? 1 : 0);

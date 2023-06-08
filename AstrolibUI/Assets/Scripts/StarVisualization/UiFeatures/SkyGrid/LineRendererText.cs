@@ -25,7 +25,6 @@ namespace StarVisualization.UiFeatures.SkyGrid
 
                 var textObject = Instantiate(textPrefab, position, Quaternion.identity);
                 textObject.transform.parent = transform;
-                textObject.AddComponent<WorldSpacePanel>();
                 
                 var tmpText = textObject.GetComponentInChildren<TMP_Text>();
                 tmpText.text = text;

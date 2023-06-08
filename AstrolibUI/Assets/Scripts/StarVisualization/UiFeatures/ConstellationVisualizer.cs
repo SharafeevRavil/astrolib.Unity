@@ -3,6 +3,7 @@ using System.Linq;
 using Dataset;
 using Helpers;
 using StarVisualization.Stars;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,16 +16,16 @@ namespace StarVisualization.UiFeatures
         [SerializeField] private float width = 0.2f;
         
         [SerializeField] private Button button;
-
         [SerializeField] private StarSky starSky;
-        
         [SerializeField] private InputFieldsHelper inputFieldsHelper;
+        [SerializeField] private GameObject textPrefab;
         
         private List<ConstellationDto> _constellationData;
         
         private bool _generated;
-        private bool _visible;
+        private int _visible; // 0 - not visible, 1 - const, 2 - with names
         private GameObject _constellationsObject;
+        private GameObject _constellationsNamesObject;
         private double _lastToggledSec;
 
         private Image _buttonImage;
@@ -46,9 +47,11 @@ namespace StarVisualization.UiFeatures
                 _generated = true;
             }
 
-            _visible = !_visible;
-            _constellationsObject.SetActive(_visible);
-            _buttonImage.color = _visible ? ColorHelper.LimeGreen : ColorHelper.DisabledGray;
+            _visible++;
+            _visible %= 3;
+            _constellationsObject.SetActive(_visible != 0);
+            _constellationsNamesObject.SetActive(_visible == 2);
+            _buttonImage.color = _visible != 0 ? ColorHelper.LimeGreen : ColorHelper.DisabledGray;
         }
         private void FixedUpdate()
         {
@@ -66,11 +69,15 @@ namespace StarVisualization.UiFeatures
             // ReSharper disable once UseObjectOrCollectionInitializer
             _constellationsObject = new GameObject($"Constellations");
             _constellationsObject.transform.parent = transform;
+            // ReSharper disable once UseObjectOrCollectionInitializer
+            _constellationsNamesObject = new GameObject($"Constellations names");
+            _constellationsNamesObject.transform.parent = transform;
             foreach (var constellation in _constellationData)
             {
                 // ReSharper disable once UseObjectOrCollectionInitializer
-                var constellationObject = new GameObject($"Constellation {constellation.Name}");
+                var constellationObject = new GameObject($"Constellation [{constellation.ShortName}] {constellation.EnName} ({constellation.RuName})");
                 constellationObject.transform.parent = _constellationsObject.transform;
+                var posSum = new Vector3();
                 for (var i = 0; i < constellation.StarsList.Count; i++)
                 {
                     var (s1, s2) = constellation.StarsList[i];
@@ -98,8 +105,12 @@ namespace StarVisualization.UiFeatures
 
                     lineRenderer.material = material;
                     lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, width);
-                    //lineRenderers.Add(lineRenderer);
+
+                    posSum += (star1.Position + star2.Position) * starFieldScale / 2;
                 }
+                
+                var text = Instantiate(textPrefab, posSum / constellation.StarsList.Count, Quaternion.identity, _constellationsNamesObject.transform);
+                text.GetComponentInChildren<TMP_Text>().text = constellation.RuName;
             }
         }
     }

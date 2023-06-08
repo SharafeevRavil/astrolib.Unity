@@ -518,6 +518,7 @@ MonoBehaviour:
   button: {fileID: 2061821887}
   starSky: {fileID: 1221075972}
   inputFieldsHelper: {fileID: 1184443237}
+  textPrefab: {fileID: 1313891666377954198, guid: fa82bf6549c6bf541bec26ebb5312462, type: 3}
 --- !u!4 &91455983
 Transform:
   m_ObjectHideFlags: 0
