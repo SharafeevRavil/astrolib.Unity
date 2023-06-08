@@ -54,6 +54,7 @@ namespace StarVisualization
             }
             else
             {
+                if (_foundStars.Count == 0) return;
                 _currentIndex++;
                 _currentIndex %= _foundStars.Count;
             }

@@ -404,7 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constellationFilename: constellationship
   material: {fileID: 2100000, guid: a3429899d8686e4418c180cbdd798a53, type: 2}
-  width: 0.4
+  width: 0.6
   button: {fileID: 2061821887}
   starSky: {fileID: 1221075972}
   inputFieldsHelper: {fileID: 1184443237}
@@ -1743,11 +1743,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meridianCount: 24
-  parallelCount: 24
+  parallelCount: 12
   radius: 400
   button: {fileID: 339990457}
   material: {fileID: 2100000, guid: 71ab7b45ec3102945a99bb6edf6ff591, type: 2}
   width: 0.5
+  parallelTextCountMax: 24
+  parallelTextCountMin: 4
+  meridianTextCount: 12
+  textPrefab: {fileID: 1313891666377954198, guid: ea67ce0647491604e91fc5e93c5d5f65, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1854,9 +1858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f09e88d24a64d39bbac295e38ee96a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 30
+  rotationSpeed: 45
   verticalLimit: 80
-  mouseRotationSpeed: 60
+  mouseRotationSpeed: 90
   inputFieldsHelper: {fileID: 1184443237}
 --- !u!1 &1184443236
 GameObject:

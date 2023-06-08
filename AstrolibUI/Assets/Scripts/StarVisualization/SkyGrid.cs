@@ -7,21 +7,27 @@ namespace StarVisualization
     public class SkyGrid : MonoBehaviour
     {
         [SerializeField] private int meridianCount = 24; // Количество меридианов
-        [SerializeField] private int parallelCount = 24; // Количество параллелей
+        [SerializeField] private int parallelCount = 12; // Количество параллелей
         [SerializeField] private float radius = 400f; // Радиус сетки
 
         [SerializeField] private Button button;
-        
+
         [SerializeField] private Material material;
         [SerializeField] private float width = 0.5f;
-            
+
+        [SerializeField] private int parallelTextCountMax = 8;
+        [SerializeField] private int parallelTextCountMin = 2;
+        [SerializeField] private int meridianTextCount = 6;
+
+        [SerializeField] private GameObject textPrefab;
+
         private GameObject _meridiansGo;
         private GameObject _parallelsGo;
-        
+
         private bool _generated;
         private bool _visible;
         private Image _buttonImage;
-        
+
         private void Start()
         {
             button.onClick.AddListener(ToggleGrid);
@@ -51,7 +57,7 @@ namespace StarVisualization
             _parallelsGo = new GameObject("Parallels");
             _parallelsGo.transform.parent = thisTransform;
 
-            var parallelInterval = 360f / parallelCount;
+            var parallelInterval = 180f / parallelCount;
 
             GenerateMeridians(parallelInterval);
             GenerateParallels(parallelInterval);
@@ -62,10 +68,10 @@ namespace StarVisualization
             for (var i = 0; i < meridianCount; i++)
             {
                 var angle = i * 360f / meridianCount; // Угол меридиана
-                var points = new Vector3[parallelCount / 2 + 1];
+                var points = new Vector3[parallelCount + 1];
 
                 // Создаем точки меридиана
-                for (var j = 0; j <= parallelCount / 2; j++)
+                for (var j = 0; j <= parallelCount; j++)
                 {
                     var latitude = j * parallelInterval; // Широта точки
                     var x = Mathf.Sin(latitude * Mathf.Deg2Rad) * Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
@@ -78,12 +84,14 @@ namespace StarVisualization
                 var lineObject = new GameObject($"Meridian {i}");
                 lineObject.transform.parent = _meridiansGo.transform;
                 var lineRenderer = lineObject.AddComponent<LineRenderer>();
-                lineRenderer.positionCount = parallelCount / 2 + 1;
+                lineRenderer.positionCount = parallelCount + 1;
                 lineRenderer.SetPositions(points);
 
                 lineRenderer.material = material;
                 lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, width);
-                // Дополнительные настройки LineRenderer
+
+                var text = lineObject.AddComponent<LineRendererText>();
+                text.CreateTextsAlongLine(lineRenderer, textPrefab, meridianTextCount, $"{i}h", false);
             }
         }
 
@@ -92,10 +100,10 @@ namespace StarVisualization
             for (var i = 1; i < parallelCount; i++)
             {
                 var latitude = i * parallelInterval; // Широта параллели
-                var points = new Vector3[meridianCount];
+                var points = new Vector3[meridianCount + 1];
 
                 // Создаем точки параллели
-                for (var j = 0; j < meridianCount; j++)
+                for (var j = 0; j <= meridianCount; j++)
                 {
                     var angle = j * 360f / meridianCount; // Угол меридиана
                     var x = Mathf.Sin(latitude * Mathf.Deg2Rad) * Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
@@ -108,12 +116,17 @@ namespace StarVisualization
                 var lineObject = new GameObject($"Parallel {i}");
                 lineObject.transform.parent = _parallelsGo.transform;
                 var lineRenderer = lineObject.AddComponent<LineRenderer>();
-                lineRenderer.positionCount = meridianCount;
+                lineRenderer.positionCount = meridianCount + 1;
                 lineRenderer.SetPositions(points);
 
                 lineRenderer.material = material;
                 lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, width);
-                // Дополнительные настройки LineRenderer
+
+                var distToCenterSignedCount = parallelCount / 2 - i;
+                var distToCenter = Mathf.Abs(distToCenterSignedCount) / (parallelCount / 2f - 1);
+                var textCount = Mathf.Lerp(parallelTextCountMax, parallelTextCountMin, distToCenter);
+                var text = lineObject.AddComponent<LineRendererText>();
+                text.CreateTextsAlongLine(lineRenderer, textPrefab, Mathf.RoundToInt(textCount), $"{distToCenterSignedCount * 15}°", true);
             }
         }
     }

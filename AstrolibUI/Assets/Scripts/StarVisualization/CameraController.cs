@@ -42,7 +42,7 @@ namespace StarVisualization
             var horizontalInput = Input.GetAxis("Horizontal");
             var verticalInput = Input.GetAxis("Vertical");
             
-            if(horizontalInput <= 1e-3 && verticalInput <= 1e-3) return;
+            if(Mathf.Abs(horizontalInput) <= 1e-3 && Mathf.Abs(verticalInput) <= 1e-3) return;
 
             transform.Rotate(Vector3.up, horizontalInput * rotationSpeed * Time.deltaTime);
 
